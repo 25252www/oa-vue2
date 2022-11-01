@@ -144,8 +144,33 @@ export default {
       })
       this.fetchData()
     },
+    funcDownload(content, filename, type = 'text/plain') {
+      const downLink = document.createElement('a')
+
+      // 支持a链接下载？
+      if (!('download' in downLink)) return false
+
+      downLink.download = filename
+      downLink.style.display = 'none'
+
+      // 字符串内容转blob地址
+      const blobURL = new Blob([content], { type })
+      downLink.href = URL.createObjectURL(blobURL)
+
+      // 触发下载
+      document.body.appendChild(downLink)
+      downLink.click()
+
+      // 移除 a 节点
+      document.body.removeChild(downLink)
+    },
     downloadLeave() {
-      getLeavesDownload()
+      getLeavesDownload().then(res => {
+        const data = res.data
+        const fileName = res.headers['content-disposition'].split('=')[1]
+        const type = 'text/csv,charset=utf-8'
+        this.funcDownload(data, fileName, type)
+      })
     }
   }
 }

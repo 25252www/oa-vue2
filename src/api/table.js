@@ -50,7 +50,8 @@ export function deleteTeachersLeave(param) {
 export function getLeavesDownload() {
   return request({
     url: '/leaves/download',
-    method: 'get'
+    method: 'get',
+    responseType: 'blob'
   })
 }
 

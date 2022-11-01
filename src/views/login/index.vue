@@ -5,7 +5,7 @@
     >
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">请假审批系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -45,7 +45,7 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
                  @click.native.prevent="handleLogin"
-      >Login
+      >登录
       </el-button>
 
       <!--      <div class="tips">-->

@@ -5,7 +5,7 @@
       <el-button type="primary" @click="passLeave">通过</el-button>
       <el-button @click="rejectLeave">不通过</el-button>
       <el-button @click="deleteLeave">删除</el-button>
-      <el-button @click="downloadLeave">导出</el-button>
+      <el-button @click="downloadLeave">全部导出</el-button>
     </el-row>
     <el-table
       class="leave-list"
@@ -68,26 +68,23 @@
       </el-table-column>
       <el-table-column label="证明材料" align="center">
         <template slot-scope="scope">
-          {{ scope.row.material }}
+          <el-image
+            style="width: 100px; height: 100px"
+            :src="getImgUrl(scope)"
+            :preview-src-list="getImgUrlArray(scope)"
+          >
+            <div slot="error" class="image-slot">
+            </div>
+          </el-image>
         </template>
       </el-table-column>
-      <!--      <el-table-column class-name="status-col" label="Status" width="110" align="center">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
-      <!--      <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <i class="el-icon-time"/>-->
-      <!--          <span>{{ scope.row.display_time }}</span>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
     </el-table>
   </div>
 </template>
 
 <script>
 import { deleteTeachersLeave, getLeavesDownload, getTeachersLeaveList, postTeachersLeaveProcess } from '@/api/table'
+import { server } from '../../settings.js'
 
 export default {
   data() {
@@ -168,9 +165,21 @@ export default {
       getLeavesDownload().then(res => {
         const data = res.data
         const fileName = res.headers['content-disposition'].split('=')[1]
-        const type = 'text/csv,charset=utf-8'
-        this.funcDownload(data, fileName, type)
+        const type = 'text/csv;charset=utf-8'
+        this.funcDownload('\ufeff' + data, fileName, type)
       })
+    },
+    getImgUrl(scope) {
+      if (scope.row.material != null && scope.row.material.length > 1) {
+        return server + scope.row.material.substring(1)
+      }
+      return ''
+    },
+    getImgUrlArray(scope) {
+      if (scope.row.material != null && scope.row.material.length > 1) {
+        return [server + scope.row.material.substring(1)]
+      }
+      return []
     }
   }
 }

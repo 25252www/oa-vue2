@@ -123,7 +123,14 @@
       </el-table-column>
       <el-table-column label="证明材料" align="center">
         <template slot-scope="scope">
-          {{ scope.row.material }}
+          <el-image
+            style="width: 100px; height: 100px"
+            :src="getImgUrl(scope)"
+            :preview-src-list="getImgUrlArray(scope)"
+          >
+            <div slot="error" class="image-slot">
+            </div>
+          </el-image>
         </template>
       </el-table-column>
     </el-table>
@@ -133,6 +140,7 @@
 <script>
 import { getStudentsLeaveList, putStudentsLeave } from '@/api/table'
 import { mapGetters } from 'vuex'
+import { server } from '../../settings.js'
 
 export default {
   computed: {
@@ -207,6 +215,18 @@ export default {
     handleSuccess(response, file, fileList) {
       this.form.material = response.data
       // console.log(this.form.material)
+    },
+    getImgUrl(scope) {
+      if (scope.row.material != null && scope.row.material.length > 1) {
+        return server + scope.row.material.substring(1)
+      }
+      return ''
+    },
+    getImgUrlArray(scope) {
+      if (scope.row.material != null && scope.row.material.length > 1) {
+        return [server + scope.row.material.substring(1)]
+      }
+      return []
     }
   }
 }

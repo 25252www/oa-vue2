@@ -59,5 +59,18 @@
     "node": ">=8.9",
     "npm": ">= 3.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/25252www/oa-vue2.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/25252www/oa-vue2/issues"
+  },
+  "homepage": "https://github.com/25252www/oa-vue2#readme"
 }

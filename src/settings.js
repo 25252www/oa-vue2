@@ -14,5 +14,5 @@ module.exports = {
    */
   sidebarLogo: false,
 
-  server: 'http://124.70.79.26:8080/'
+  server: 'http://124.70.79.26:8081/'
 }

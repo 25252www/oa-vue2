@@ -163,10 +163,11 @@ export default {
     },
     downloadLeave() {
       getLeavesDownload().then(res => {
+        // console.log(res)
         const data = res.data
         const fileName = res.headers['content-disposition'].split('=')[1]
         const type = 'text/csv;charset=utf-8'
-        this.funcDownload('\ufeff' + data, fileName, type)
+        this.funcDownload(data, fileName, type)
       })
     },
     getImgUrl(scope) {

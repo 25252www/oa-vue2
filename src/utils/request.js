@@ -47,7 +47,10 @@ service.interceptors.response.use(
     // if (response.config.responseType === 'blob') {
     //   return response
     // }
-    if (response.data instanceof Blob) {
+    // if (response.data instanceof Blob) {
+    //   return response
+    // }
+    if (response.headers['content-type'] === 'application/octet-stream') {
       return response
     }
     const res = response.data
